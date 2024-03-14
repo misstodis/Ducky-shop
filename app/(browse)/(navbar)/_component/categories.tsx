@@ -1,26 +1,42 @@
-import { Button } from '@/components/ui/button'
-import React from 'react'
+'use client';
 
-type Props = {}
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from '@/components/ui/navigation-menu';
+import Category from './category';
+import Link from 'next/link';
+type Props = {
+    children: React.ReactNode;
+}
 
-export default function Categories({ }: Props) {
+export default function Categories({
+    children,
+}: Props) {
     const categories = [
         'Home',
         'Products',
     ]
 
     return (
-        <div className='flex gap-2'>
-            {categories.map((category, index) => {
-                return (
-                    <Button
-                        key={index}
-                        variant={'link'}
-                    >
-                        {category}
-                    </Button>
-                )
-            })}
-        </div>
+        <NavigationMenu>
+            <NavigationMenuList>
+                <NavigationMenuItem>
+                    <Link href="/" legacyBehavior passHref>
+                        <NavigationMenuLink >
+                            Documentation
+                        </NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                    <NavigationMenuTrigger className='bg-transparent data-[state=open]:bg-transparent data-[state=closed]:bg-transparent' >
+                        Products
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        {children}
+                    </NavigationMenuContent>
+                </NavigationMenuItem>
+            </NavigationMenuList>
+        </NavigationMenu>
     )
 }
